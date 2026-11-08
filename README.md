@@ -1,8 +1,8 @@
 # Newcastle Sipariş
 
-### [⬇ Uygulamayı indir (sürüm 2.1)](https://github.com/rwich1/NcCaptanorder-indir/raw/main/NewcastleSiparis.apk)
+### [⬇ Uygulamayı indir (sürüm 2.2)](https://github.com/rwich1/NcCaptanorder-indir/raw/main/NewcastleSiparis.apk)
 
-Son güncelleme: 29.10.2026
+Son güncelleme: 08.11.2026
 
 ## Telefona kurulum (Android)
 
