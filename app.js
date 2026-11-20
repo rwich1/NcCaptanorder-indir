@@ -1,6 +1,6 @@
 'use strict';
 (function () {
-  const VERSION = '2.3';
+  const VERSION = '2.4';
 
   // ---------- kayıt (telefon hafızası) ----------
   const K = { orders: 'nc.orders', drafts: 'nc.drafts', seq: 'nc.seq', notes: 'nc.notes', ic: 'nc.ic', ui: 'nc.ui', use: 'nc.use', pin: 'nc.pin', oos: 'nc.oos', stok: 'nc.stok' };
@@ -134,7 +134,7 @@
     c.items.forEach(it => {
       // Aynı isimli yemek birden fazla kategoride olabilir (örn. Fish and Chips) -> tek ürün sayılır.
       // İçkilerde kategori önemlidir (Jameson kadeh / shot / şişe farklıdır).
-      const key = (g.kind === 'food' ? 'yemek' : c.id) + ':' + norm(it.n).replace(/ /g, '-');
+      const key = ((c.k || g.kind) === 'food' ? 'yemek' : c.id) + ':' + norm(it.n).replace(/ /g, '-');
       const icDef = (window.ICERIK || {})[it.n] || null;
       if (ITEMS[key]) { c.list.push(ITEMS[key]); if (!ITEMS[key].icDef) ITEMS[key].icDef = icDef; return; }
       const og = (c.o || []).concat(it.o || []);
@@ -151,18 +151,31 @@
     return v && (v.t || v.kc) ? v : null;
   };
   // ---------- ROP (kasa programı) sırası ----------
-  // Teyitli siparişte satırlar ROP'taki sırayla gruplanır: önce kısayol paneli, sonra ROP kategorileri.
-  const ROPQ = (window.ROP_SIRA && window.ROP_SIRA.kisayol) || [];
-  const ROPG = (window.ROP_SIRA && window.ROP_SIRA.gruplar) || [];
-  const ropCat = {};
-  ROPG.forEach((g, i) => g.c.forEach(c => { ropCat[c] = i; }));
+  // Teyitli siparişte satırlar ROP'taki sekme › alt sekme sırasıyla gruplanır ve ROP'taki buton adıyla yazılır.
+  // Kurallar menu.js → ROP_SIRA. Önce kategorili kurallar ('biralar>Sol'), sonra sadece adlı kurallar denenir;
+  // eşleşme yoksa ürün kendi kategorisinin bölümüne uygulamadaki adıyla girer.
+  const ROP_RULES = [], ROP_CAT = {};
+  ((window.ROP_SIRA && window.ROP_SIRA.sekmeler) || []).forEach((t, ti) => {
+    const tabG = ti * 100 + 99;   // alt sekmesi bilinmeyen ürünler sekmenin sonunda
+    (t.c || []).forEach(c => { ROP_CAT[c] = { g: tabG, label: t.n }; });
+    (t.alt || []).forEach((a, ai) => {
+      const g = ti * 100 + ai, label = t.n + ' › ' + a.n;
+      (a.c || []).forEach(c => { ROP_CAT[c] = { g, label }; });
+      (a.u || []).forEach(([ref, rn], ui) => {
+        const [lhs, opt] = ref.split('|'), gt = lhs.indexOf('>');
+        ROP_RULES.push({ cat: gt >= 0 ? lhs.slice(0, gt) : null, n: gt >= 0 ? lhs.slice(gt + 1) : lhs, opt: opt || null, rn, g, label, o: ui });
+      });
+    });
+  });
+  ROP_RULES.sort((a, b) => (a.cat ? 0 : 1) - (b.cat ? 0 : 1));   // kategorili kurallar önce (sıralama kararlı)
   function ropPlace(l) {
     const it = ITEMS[l.key];
-    if (!it) return { g: ROPG.length + 2, label: 'Menü dışı', o: 0 };
-    const qi = ROPQ.findIndex(q => q.n === it.n && (!q.o || (l.o || []).indexOf(q.o) >= 0));
-    if (qi >= 0) return { g: 0, label: 'ROP kısayol paneli', o: qi };
-    const gi = ropCat[it.cat.id];
-    return gi == null ? { g: ROPG.length + 1, label: 'Diğer', o: it.ord } : { g: gi + 1, label: ROPG[gi].n, o: it.ord };
+    if (!it) return { g: 1e6 + 1, label: 'Menü dışı', o: 0, rn: null };
+    const cats = CATS.filter(c => c.list.indexOf(it) >= 0).map(c => c.id);
+    const r = ROP_RULES.find(r => r.n === it.n && (!r.cat || cats.indexOf(r.cat) >= 0) && (!r.opt || (l.o || []).indexOf(r.opt) >= 0));
+    if (r) return { g: r.g, label: r.label, o: r.o, rn: r.rn };
+    const c = ROP_CAT[it.cat.id];
+    return c ? { g: c.g, label: c.label, o: 1000 + it.ord, rn: null } : { g: 1e6, label: 'Diğer', o: it.ord, rn: null };
   }
   const ropSorted = lines => lines.map((l, i) => ({ l, p: ropPlace(l), i }))
     .sort((a, b) => a.p.g - b.p.g || a.p.o - b.p.o || a.i - b.i);
@@ -211,6 +224,7 @@
     corba: '🍲', baslangiclar: '🧀', salata: '🥗', arasicak: '🍗', patates: '🍟', ortaya: '🍗', nachos: '🌮', taco: '🌮',
     quesadilla: '🌯', cerez: '🥜', sos: '🥫', burger: '🍔', pizza: '🍕', makarna: '🍝', et: '🥩', tavuk: '🍗', deniz: '🐟',
     uzakdogu: '🥡', durum: '🌯', krep: '🥞', sokak: '🥖', kase: '🥗', diyet: '🥗', tatli: '🍰',
+    kahvalti: '🍳', cocuk: '🧒', ekler: '➕', promosise: '🍾', promo51: '🍺',
     cay: '🍵', kahve: '☕', mesrubat: '🥤', su: '🫧', biralar: '🍺', kadeh: '🍷', kirmizi: '🍷', beyaz: '🍷', roze: '🍷',
     kopuklu: '🥂', aperatif: '🥂', sise: '🍾', sangria: '🍷',
   };
@@ -516,12 +530,12 @@
         <div class="lockn">${I.lock} Kayıt kilitli: silinemez, her değişiklik saatiyle aşağıya yazılır.</div>
       </section>
       ${ro || o.closedAt ? '' : '<div class="hint">Aynı üründen bir tane daha için ürünün üstüne dokun.</div>'}
-      <div>${(() => {   // ROP sırası: kısayol paneli → ROP kategorileri; her grubun başında ROP'taki adı
+      <div>${(() => {   // ROP sırası: sekme › alt sekme; teyitli satırda ROP'taki buton adı
         let prev = null;
         return ropSorted(o.lines).map(x => {
           const h = x.p.label !== prev ? `<div class="dgh">${esc(x.p.label)}</div>` : '';
           prev = x.p.label;
-          return h + lineHTML(o, x.l, ro);
+          return h + lineHTML(o, x.l, ro, x.p.rn);
         }).join('');
       })()}</div>
       ${ro ? '' : `<div class="acts">
@@ -535,13 +549,15 @@
     </main>`;
   };
 
-  function lineHTML(o, l, ro) {
-    const aq = activeQ(l), tap = !ro && !o.closedAt;
+  // Teyit alınmış satırda ROP'taki buton adı büyük yazılır, uygulamadaki ad altında küçük kalır.
+  const ropName = (l, rn) => l.cf && rn && rn !== l.n ? rn : null;
+  function lineHTML(o, l, ro, rn) {
+    const aq = activeQ(l), tap = !ro && !o.closedAt, rop = ropName(l, rn);
     return `<div class="dl ${aq <= 0 ? 'gone' : ''}">
       <div class="rq">${aq > 0 ? aq : totalQ(l)}×</div>
       <div class="grow${tap ? ' tapadd' : ''}"${tap ? ` data-act="again" data-id="${o.id}" data-u="${l.u}"` : ''}>
-        <div class="rn">${esc(l.n)}</div>
-        ${lineDetail(l) ? `<div class="rd">${esc(lineDetail(l))}</div>` : ''}
+        <div class="rn">${esc(rop || l.n)}</div>
+        ${rop || lineDetail(l) ? `<div class="rd">${esc([rop ? l.n : ''].concat(lineDetail(l)).filter(Boolean).join(' · '))}</div>` : ''}
         ${lineNotes(l) ? `<div class="rnote">${esc(lineNotes(l))}</div>` : ''}
         ${l.from ? `<div class="meta from">↪ ${esc(l.from)} siparişinden taşındı</div>` : ''}
         ${l.at !== o.at ? `<div class="meta add">+ ${stamp(l.at)} sonradan eklendi</div>` : ''}
@@ -811,7 +827,7 @@
     ropSorted(o.lines).forEach(({ l, p }) => {
       if (p.label !== prev) { L.push('[' + p.label + ']'); prev = p.label; }
       const aq = activeQ(l);
-      L.push(`${aq > 0 ? aq : totalQ(l)}× ${l.n}${lineDetail(l) ? ' [' + lineDetail(l) + ']' : ''}${aq <= 0 ? ' (İPTAL)' : ''}`);
+      L.push(`${aq > 0 ? aq : totalQ(l)}× ${ropName(l, p.rn) || l.n}${lineDetail(l) ? ' [' + lineDetail(l) + ']' : ''}${aq <= 0 ? ' (İPTAL)' : ''}`);
       if (lineNotes(l)) L.push('   Not: ' + lineNotes(l));
       if (l.from) L.push('   ' + l.from + ' siparişinden taşındı');
       if ((l.ad || []).length) L.push('   Bir tane daha: ' + l.ad.map(a => '+' + a.q + ' ' + hms(a.t)).join(', '));

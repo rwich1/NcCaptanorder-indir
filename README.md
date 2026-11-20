@@ -1,6 +1,8 @@
 # Newcastle Sipariş
 
-Sürüm 2.3 · son güncelleme 08.11.2026
+Sürüm 2.4 (iPhone / web) · son güncelleme 20.11.2026
+
+2.4: Teyitli siparişte ürünler ROP'taki sekme › alt sekme sırasıyla ayrılır ve ROP'taki buton adıyla yazılır. Ekler (Z..), 5+1 ve (Pro) promosyonlar, Çocuk Menü ve Kahvaltı eklendi.
 
 ## 📱 iPhone
 
@@ -20,6 +22,7 @@ Güncellemeler kendiliğinden gelir: yeni sürüm yayınlandıktan sonra uygulam
 2. Telefon izin isterse **"Bu kaynaktan uygulama yüklemeye izin ver"**.
 3. **Yükle**. Play Protect uyarısı çıkarsa **"Yine de yükle"** (uygulama Play Store'dan gelmediği için normaldir).
 
+APK hâlâ 2.3; 2.4 özellikleri için Android'de de Chrome → ⋮ → **Ana ekrana ekle** kullan.
 Güncelleme: aynı linkten yeni sürümü indirip kur, kayıtlar silinmez.
 (İstersen Android'de de iPhone'daki gibi Chrome → ⋮ → **Ana ekrana ekle** ile kullanabilirsin.)
 
