@@ -23,6 +23,42 @@
   const AMER = ["Jack Daniel's", 'Jim Beam'];
   const K34 = '3-4 kişilik';
 
+  // [uygulamadaki ad, ROP'taki buton adı]
+  const EKLER = [
+    ['Maç Ücreti', 'Mac Ücreti'], ['Maç Ücreti (S)', 'Mac Ücreti (S)'],
+    ['Ekstra Çıtır Tavuk 200 gr', 'Z.. Çıtır Tavuk 200 Gr'], ['Ekstra Et 100 gr', 'Z.. Et 100 gr'],
+    ['Ekstra Ezine Peynir 1 adet', 'Z.. Ezine Peynir 1 Adet'], ['Ekstra Haşlanmış Sebze', 'Z.. Haşlanmış Sebze'],
+    ['Ekstra Havuç Salatalık', 'Z.. Havuç Salatalık'], ['Ekstra Köfte 2 adet', 'Z.. Köfte 2 Adet'],
+    ['Ekstra Levrek 100 gr', 'Z.. Levrek 100 Gr'], ['Ekstra Mozzarella Stick 2 adet', 'Z.. Mozzarella Stick 2 Adet'],
+    ['Ekstra Paçanga 1 adet', 'Z.. Paçanga 1 Adet'], ['Ekstra Parmesan 1 dilim', 'Z.. Parmesan 1 Dilim'],
+    ['Ekstra Patates 125 gr', 'Z.. Patates 125 gr'], ['Ekstra Peynir 2 dilim', 'Z.. Peynir 2 Dilim'],
+    ['Ekstra Salam', 'Z.. Salam'], ['Ekstra Sigara Böreği 2 adet', 'Z.. Sigara Böreği 2 Adet'],
+    ['Ekstra Simit 1 adet', 'Z.. Simit 1 Adet'], ['Ekstra Soğan Halkası 6 adet', 'Z.. Soğan Halkası 6 Adet'],
+    ['Ekstra Somon Füme 30 gr', 'Z.. Somon Füme 30 Gr'], ['Ekstra Sosis 1 adet', 'Z.. Sosis 1 Adet'],
+    ['Ekstra Sucuk (4/1)', 'Z.. Sucuk 4/1'], ['Ekstra Tavuk 100 gr', 'Z.. Tavuk 100 gr'],
+    ['Ekstra Tavuk Nugget 1 adet', 'Z.. Tavuk Nugget 1 Adet'], ['Ekstra Trio Burger 1 adet', 'Z.. Trio Burger (1 Adet)'],
+    ['Ekstra Turşu', 'Z.. Turşu'], ['Ekstra Yoğurt', 'Z.. Yoğurt'], ['Ekstra Zeytin', 'Z.. Zeytin'],
+  ];
+  const PRO = [
+    ['Aberlour 12', '(Pro) Aberlour 12Y. 70 Cl'], ['Absolut', '(Pro) Absolut 70 Cl'],
+    ['Beefeater', '(Pro) Beefeater 70 Cl'], ['Beefeater Pink', '(Pro) Beefeater Pink 70 Cl'],
+    ['Chivas Regal 13', '(Pro) Chivas R.13Y.70 Cl'], ['Chivas Regal 15', '(Pro) Chivas R.15Y.70 Cl'],
+    ['Chivas Regal 18', '(Pro) Chivas R.18Y.70 Cl'], ['Chivas Regal Smoky', '(Pro) Chivas R.Smoky 70 Cl'],
+    ['Glenlivet Founders', '(Pro) Glenlivet Fonders 70 Cl'], ['Jameson', '(Pro) Jameson 70 Cl'],
+    ['Jameson Black Barrel', '(Pro) Jameson Black 70 Cl'], ['Malfy Limone', '(Pro) Malfy Limone 70 Cl'],
+    ['Malfy Originale', '(Pro) Malfy Originale 70 Cl'], ['Malfy Rosa', '(Pro) Malfy Rosa 70 Cl'],
+    ['Olmeca', '(Pro) Olmeca 70 Cl'],
+  ];
+  const P51 = [
+    ['1664 Blanc Şişe', '5+1 Blanc Şişe'], ['Budweiser', '5+1 Budweiser'], ['Carlsberg Luna Şişe', '5+1 C.Luna Şişe'],
+    ['Carlsberg Elephant 50 cl', '5+1 Carlsberg Elephant Ş.50'], ['Carlsberg Şişe 33 cl', '5+1 Carlsberg Ş.33'],
+    ['Carlsberg Şişe 50 cl', '5+1 Carlsberg Ş.50'], ['Desperados', '5+1 Desperados'], ['Frederik', '5+1 Frederik'],
+    ['Glutensiz Bira', '5+1 Glutensiz'], ['Heineken', '5+1 Heineken'], ['Sol', '5+1 Sol Şişe'],
+    ['Tuborg Filtresiz', '5+1 Tuborg Filtresiz'], ['Tuborg Ice', '5+1 Tuborg ICE'], ['Tuborg Smooth', '5+1 Tuborg Smooth 33 Cl'],
+    ['Tuborg Şişe 33 cl', '5+1 Tuborg Şişe 33'], ['Tuborg Şişe 50 cl', '5+1 Tuborg Şişe 50'],
+    ['Weihenstephan Vitus', '5+1 Weih. Vitus Şiş'], ['Weihenstephan Şişe', '5+1 Weihenstephan Şişe'],
+  ];
+
   window.MENU = [
     // ======================= BAŞLANGIÇ =======================
     {
@@ -30,6 +66,9 @@
         { id: 'corba', name: 'Çorbalar', items: [
           { n: 'Günün Çorbası' }, { n: 'Günün Çorbası (Yarım)' },
           { n: 'Minestrone Çorbası' }, { n: 'Minestrone Çorbası (Yarım)' },
+        ] },
+        { id: 'kahvalti', name: 'Kahvaltı', items: [
+          { n: 'Kahvaltı', o: [V('Kişi', ['1 Kişilik', '2 Kişilik', '4 Kişilik'])] }, { n: 'Kahvaltı Tabağı' },
         ] },
         { id: 'baslangiclar', name: 'Başlangıçlar', items: [
           { n: 'Mozzarella Caprese' }, { n: 'Kızarmış Hellim Tabağı' },
@@ -71,6 +110,7 @@
         { id: 'sos', name: 'İlave Soslar', items: [
           { n: 'Sweet Chili Sos' }, { n: 'Garlic Sos' }, { n: 'Tartar Sos' }, { n: 'Salsa Sos' },
           { n: 'Avokado Sos' }, { n: 'Acılı Buffalo Sos' }, { n: 'Sour Cream Sos' }, { n: 'Cheddar Sos' },
+          { n: 'Kokteyl Sos' }, { n: 'Çikolata Sos' }, { n: 'Joker Sos (1 adet)' },
         ] },
       ],
     },
@@ -126,6 +166,11 @@
           { n: 'Mozzarella Caprese' }, { n: 'Buharda Tavukgöğsü' }, { n: 'Tavuklu Diyet Salata' },
           { n: 'Glütensiz Çıtır Tavuk' }, { n: 'Glütensiz Pirinç Makarna' },
         ] },
+        { id: 'cocuk', name: 'Çocuk Menü', items: [
+          { n: 'Çocuk Abur Cubur' }, { n: 'Çocuk Köfteli Spagetti' }, { n: 'Çocuk Mini Çıtır Tavuk' },
+          { n: 'Çocuk Pizza Karışık' }, { n: 'Çocuk Pizza Margarita' }, { n: 'Çocuk Pizza Sosisli' },
+          { n: 'Çocuk Sade Makarna' }, { n: 'Çocuk Sosis Keyfi' }, { n: 'Çocuk Şinitzel' }, { n: 'Çocuk Trio Burger' },
+        ] },
         { id: 'tatli', name: 'Tatlılar', items: [
           { n: 'Ilık Çikolatalı Kek', s: '20 dk servis' }, { n: 'San Sebastian' }, { n: 'Profiterol' },
           { n: 'Orman Meyveli Beyaz Çikolatalı Profiterol' }, { n: 'Tiramisu' },
@@ -152,16 +197,18 @@
         ] },
         { id: 'mesrubat', name: 'Meşrubat', items: [
           { n: 'Coca-Cola' }, { n: 'Coca-Cola Light' }, { n: 'Coca-Cola Şekersiz' },
-          { n: 'Fanta' }, { n: 'Sprite' }, { n: 'Schweppes' }, { n: 'Fuse Tea' },
-          { n: 'Cappy Meyve Suyu' }, { n: 'Ayran', s: 'Sütaş cam şişe 300 ml' },
+          { n: 'Fanta' }, { n: 'Sprite' },
+          { n: 'Schweppes', o: [V('Çeşit', ['Tonik', 'Tonik Şekersiz', 'Lime', 'Mandarin', 'Zencefil'])] },
+          { n: 'Fuse Tea', o: [V('Çeşit', ['Limon', 'Şeftali'])] },
+          { n: 'Cappy Meyve Suyu', o: [V('Çeşit', ['Elma', 'Karışık', 'Portakal', 'Şeftali', 'Vişne'])] }, { n: 'Ayran', s: 'Sütaş cam şişe 300 ml' },
           { n: 'Red Bull', o: [V('Çeşit', ['Energy Drink', 'Sugarfree', 'Peach', 'Red', 'White', 'Blue'])] },
           { n: 'Red Bull Twist', o: [V('Çeşit', ['White', 'Blue'])] },
           { n: 'Stay Classic', s: 'Red Bull + Votka' },
         ] },
         { id: 'su', name: 'Su · Soda · Meyve Suyu', items: [
           { n: 'Su', s: 'Damla 330 ml' }, { n: 'Premium Soda', o: [V('Boy', ['250 ml', '750 ml'])] },
-          { n: 'Meyveli Soda' }, { n: 'Soda Limon' }, { n: 'Soda Vişne' },
-          { n: 'Limonata' }, { n: 'Meyveli Limonata' }, { n: 'Alkolsüz Meyve Kokteyli' },
+          { n: 'Meyveli Soda', o: [V('Çeşit', ['Çilek', 'Elma', 'Karpuz Çilek', 'Limon', 'Nar'])] }, { n: 'Soda Limon' }, { n: 'Soda Vişne' },
+          { n: 'Limonata' }, { n: 'Meyveli Limonata', o: [V('Çeşit', ['Çilek', 'Elma', 'Nane', 'Orman Meyveli'])] }, { n: 'Alkolsüz Meyve Kokteyli' },
           { n: 'Portakal Suyu', s: 'Exotic' }, { n: 'Portakallı Havuç Suyu', s: 'Exotic' },
           { n: 'Portakallı Nar Suyu', s: 'Exotic' }, { n: 'Nar Suyu', s: 'Exotic' },
         ] },
@@ -341,36 +388,243 @@
         ] },
       ],
     },
+    // ======================= EKSTRA · PROMOSYON =======================
+    // Ürün adı uygulamada tam yazılır; ROP'taki buton adı aşağıdaki ROP_SIRA'da (teyitten sonra o görünür).
+    {
+      id: 'ekstra', name: 'Ekstra · Promo', kind: 'food', cats: [
+        { id: 'ekler', name: 'Ekler ve İlaveler', items: EKLER.map(x => ({ n: x[0] })) },
+        { id: 'promosise', name: 'Promosyon Şişe (Pro)', tag: 'Promosyon', fx: ['Şişe 70 cl'], k: 'drink', items: PRO.map(x => ({ n: x[0] })) },
+        { id: 'promo51', name: '5+1 Bira', tag: '5+1 Kampanya', k: 'drink', items: P51.map(x => ({ n: x[0] })) },
+      ],
+    },
   ];
 
-  // ROP 6 (kasa programı) sırası. Teyitli siparişte ürünler bu sırayla gruplanır ki ROP'a sırayla girilsin.
-  //   kisayol: ROP'un ortadaki siyah panelindeki hazır butonlar (en başa gelir, panel sırasıyla)
-  //   gruplar: ROP kategorileri; c = bu uygulamadaki kategori id'leri (menu.js'teki id)
-  window.ROP_SIRA = {
-    kisayol: [
-      { n: 'Tuborg Gold', o: 'Fıçı 50 cl' }, { n: 'Carlsberg', o: 'Fıçı 50 cl' },
-      { n: 'Tuborg Gold', o: 'Fıçı 33 cl' }, { n: 'Carlsberg', o: 'Fıçı 33 cl' },
-      { n: 'Weihenstephan Hefeweissbier', o: 'Fıçı 50 cl' }, { n: 'Guinness', o: 'Fıçı 50 cl' },
-      { n: 'Carlsberg', o: 'Şişe 50 cl' }, { n: 'Tuborg Gold', o: 'Şişe 33 cl' },
-      { n: 'Sol' }, { n: 'Tuborg Filtresiz' }, { n: 'Türk Kahvesi' }, { n: 'Demleme Çay (Cam Bardak)' },
-      { n: 'Premium Soda' }, { n: 'Soda Limon' }, { n: 'Coffee Latte' }, { n: 'Cappuccino' },
-      { n: 'Su' }, { n: 'Demleme Çay (Kupa / Fincan)' }, { n: 'Fıstık' },
-    ],
-    gruplar: [
-      { n: 'Başlangıçlar › Çorba ve Kahvaltı', c: ['corba'] },
-      { n: 'Başlangıçlar › Başlangıç', c: ['baslangiclar'] },
-      { n: 'Başlangıçlar › Ara Sıcaklar', c: ['arasicak', 'patates', 'ortaya', 'nachos', 'taco', 'quesadilla', 'cerez', 'sos'] },
-      { n: 'Başlangıçlar › Salatalar', c: ['salata'] },
-      { n: 'Başlangıçlar › Tatlılar', c: ['tatli'] },
-      { n: 'Hamur İşleri', c: ['pizza', 'krep', 'durum'] },
-      { n: 'Ana Yemekler', c: ['burger', 'makarna', 'et', 'tavuk', 'deniz', 'uzakdogu', 'sokak', 'kase', 'diyet'] },
-      { n: 'Sıcak-Soğuk İçecek', c: ['cay', 'kahve', 'mesrubat', 'su'] },
-      { n: 'Aperatif İçecekler', c: ['aperatif', 'biralar'] },
-      { n: 'Kokteyller', c: ['sig1', 'sig2', 'intl', 'margarita', 'gintonic'] },
-      { n: 'Şarap-Şampanya', c: ['kadeh', 'kirmizi', 'beyaz', 'roze', 'kopuklu', 'sangria'] },
-      { n: 'Viskiler', c: ['viski'] },
-      { n: 'Rom-Tequila', c: ['rom', 'tekila'] },
-      { n: 'Cin-Vb.', c: ['cin', 'votka', 'likor', 'konyak', 'shot', 'shotset', 'sise'] },
-    ],
-  };
+  // ======================= ROP (kasa programı) =======================
+  // Teyitli siparişte ürünler ROP'taki sekme › alt sekme sırasıyla gruplanır ve ROP'taki buton adıyla yazılır.
+  // Sipariş alırken uygulamadaki tam ad kullanılır; ROP adı sadece sipariş ekranında / paylaşımda görünür.
+  //   u: [uygulamadaki ürün, ROP buton adı]
+  //      ürün yazımı: 'Ad'  ya da  'kategori>Ad'  (içkilerde aynı ad birden fazla kategoride olabilir)
+  //      sonuna '|seçenek' eklenirse sadece o seçenek seçildiğinde eşleşir (örn. 'biralar>Carlsberg|Fıçı 50 cl')
+  //   c: bu kategorilerin listede olmayan ürünleri de bu bölüme girer (ROP adı bilinmiyorsa uygulamadaki adla)
+  const TO = (cat, list) => list.map(x => [cat + '>' + x[0], x[1]]);
+  window.ROP_SIRA = { sekmeler: [
+    { n: 'Başlangıçlar', alt: [
+      { n: 'Çorba ve Kahvaltı', c: ['corba', 'kahvalti'], u: [
+        ['Günün Çorbası', 'Çorba Günün'], ['Günün Çorbası (Yarım)', 'Çorba Günün Yarım'],
+        ['Minestrone Çorbası', 'Çorba Minestrone'], ['Minestrone Çorbası (Yarım)', 'Çorba Minestrone Yarım'],
+        ['Kahvaltı|1 Kişilik', 'Kahvaltı 1 Kişilik'], ['Kahvaltı|2 Kişilik', 'Kahvaltı 2 Kişilik'],
+        ['Kahvaltı|4 Kişilik', 'Kahvaltı 4 Kişilik'], ['Kahvaltı Tabağı', 'Kahvaltı Tabağı'],
+      ] },
+      { n: 'Başlangıç', c: ['baslangiclar'], u: [
+        ['Ezine Peynir Tabağı', 'Ezine Peynir Tabağı'], ['Kızarmış Hellim Tabağı', 'Kızartılmış Hellim Tabağı'],
+        ['Mozzarella Caprese', 'Mozzarella Capresse'], ['Peynir Tabağı', 'Peynir Tabağı'],
+      ] },
+      { n: 'Ara Sıcaklar', c: ['arasicak', 'patates', 'ortaya', 'nachos', 'taco'], u: [
+        ['Acılı Buffalo Soslu Tavuk', 'Acılı Buffalo S.Tavuk'], ['BBQ Soslu Çıtır Tavuk', 'BBQ Soslu Çıtır Tavuk'],
+        ['Cajun Baharatlı Çıtır Tavuk', 'Cajun Bhratl.Ç.Tavuk'], ['Cheddar Soslu & Hellim Peynirli Patates Tava', 'Cheddar S.Hellim P.Tava'],
+        ['Çıtır Levrek', 'Çıtır Levrek'], ['Çıtır Tavuk', 'Çıtır Tavuk'], ['Çıtır Tavuk Sepeti', 'Çıtır Tavuk Sepeti'],
+        ['Glütensiz Çıtır Tavuk', 'Glütensiz Çıtır Tavuk'], ['Gökkuşağı', 'Gökkuşağı'], ['Gurme Tavuklar', 'Gurme Tavuk'],
+        ['Halka Kalamar', 'Halka Kalamar'], ['Nacho Chips', 'Nachos Cips'], ['Nachos de Cheese', 'Nachos de Cheese'],
+        ['Nachos de Beef', 'Nachos de Beef'], ['Nachos de Mince', 'Nachos de Mince'], ['Paçanga Böreği', 'Paçanga Böreği'],
+        ['Anne Usulü Patates|Baharatlı', 'Patates Baharatlı Anne Usl.'], ['Anne Usulü Patates', 'Patates Anne Usulü'],
+        ['Churros Patates', 'Patates Churros'], ['Gurme Patates', 'Patates Gurme'],
+        ['Parmak Patates|Baharatlı', 'Patates Parmak Baharatlı'], ['Parmak Patates', 'Patates Parmak'],
+        ['Peynirli Baharatlı Patates Tava', 'Peynirli B.Patates Tava'], ['Sıcak Sepeti', 'Sıcak Sepeti'],
+        ['Sigara Böreği', 'Sigara Böreği'], ['Sohbet Arası', 'Sohbet Arası'],
+        ['Etli Taco', 'Taco Etli'], ['Kıymalı Taco', 'Taco Kıymalı'], ['Tavuklu Taco', 'Taco Tavuklu'],
+      ] },
+      { n: 'Salatalar', c: ['salata', 'kase'], u: [
+        ['Acılı Izgara Tavuk Salata', 'Acılı.I.Tavuk Salata'], ['Ankara Salata', 'Ankara Salatası'],
+        ['Asya Esintili Salata', 'Asya Esintili Salata'], ['Çıtır Levrek Salata', 'Çıtır Levrek Salata'],
+        ['Çıtır Tavuklu Salata', 'Çıtır Tavuklu Salata'], ['Ilık Peynirli Salata', 'Ilık Peynirli Salata'],
+        ['Ilık Tavuklu Bademli Salata', 'Ilık Tavuklu Bademli Salata'], ['Izgara Etli Salata', 'Izgara Etli Salata'],
+        ['Kızarmış Hellim Peynirli Salata', 'K.Hellim P.Salata'], ['Çıtır Levrek Kase', 'Kase Çıtır Levrek'],
+        ['Çıtır Tavuklu Kase', 'Kase Çıtır Tavuklu'], ['Dana Etli Kase', 'Kase Dana Etli'], ['Köfteli Kase', 'Kase Köfteli'],
+        ['Somonlu Kase', 'Kase Somonlu'], ['Sezar Salata', 'Sezar Salata'], ['Tavuklu Diyet Salata', 'Tavuklu Diyet Salata'],
+      ] },
+      { n: 'Tatlılar', c: ['tatli'], u: [
+        ['Cheesecake|Çikolata', 'Cheesecake Çikolatalı'], ['Cheesecake|Frambuaz', 'Cheesecake Frambuazlı'],
+        ['Cheesecake|Limon', 'Cheesecake Limonlu'], ['Churros (Tatlı)', 'Churros'], ['Diyabetik Cheesecake', 'Diyabetik Cheesecake'],
+        ['Ilık Çikolatalı Kek', 'Ilık Çikolatalı Kek'], ['Kahveli Creme Brulee', 'Kahveli Creme Brulee'],
+        ['Meyve Tabağı', 'Meyve Tabağı'], ['Orman Meyveli Beyaz Çikolatalı Profiterol', 'Orman M.Beyaz Ç.Profiterol'],
+        ['Profiterol', 'Profiterol'], ['San Sebastian', 'San Sebastian'], ['Tiramisu', 'Tiramisu'],
+      ] },
+    ] },
+    { n: 'Hamur İşleri', alt: [
+      { n: 'Makarnalar', c: ['makarna'], u: [
+        ['Çıtır Tavuklu Penne', 'Çıtır Tavuk Penne'], ['Çıtır Tavuklu Mac & Cheese', 'Çıtır.T.MacCheese'],
+        ['Fettuccine Alfredo', 'Fettucini Alfredo'], ['Glütensiz Pirinç Makarna', 'Glutensiz Makarna'],
+        ['Mac & Cheese', 'MacCheese'], ['Patlıcanlı Ravioli', 'Patlıcan Ravioli'], ["Penne All'arrabbiata", "Penne All'Arrabbiata"],
+        ['Sinop Mantısı', 'Sinop Mantısı'], ['Spagetti Bolonez', 'Spagetti Bolenez'], ['Spagetti Napoliten', 'Spagetti Napoliten'],
+      ] },
+      { n: 'Pizzalar', c: ['pizza'], u: [
+        ['A la Turca', 'A la Turca Pizza'], ['Alfredo Soslu Tavuk Pizza', 'Alfredo S.Tavuk Pizza'], ['Calzone', 'Calzone'],
+        ['Formaggi Pizza', 'Formaggi Pizza'], ['Ispanaklı Lor Peynirli Pizza', 'Ispanak Lor Peynirli Pizza'],
+        ['İstiridye Mantarlı Pizza', 'İstiridye Mantarlı Pizza'], ['Kıtır Tavuk Pizza', 'Kıtır Tavuklu Pizza'],
+        ['Margherita Pizza', 'Margharita Pizza'], ['Robes Pierre', 'Robes Pierre'], ['Vejetaryen Pizza', 'Vejeteryan Pizza'],
+      ] },
+      { n: 'Dürümler / Sokak Lez.', c: ['durum', 'krep', 'sokak', 'quesadilla'], u: [
+        ['Bagette Kokoreç', 'Bagette Kokoreç'], ['Bagette Sebzeli Kokoreç', 'Bagette Kokoreç Sebzeli'],
+        ['Bagette Köfte', 'Bagette Köfte'], ['Bagette Levrek', 'Bagette Levrek'], ['Bagette Tavuk Şiş', 'Bagette Tavuk Şiş'],
+        ['Acılı Çıtır Tavuklu Dürüm', 'Dürüm Acılı Çıtır Tavuk'], ['Izgara Etli Dürüm', 'Dürüm Izgara Etli'],
+        ['Izgara Tavuklu Dürüm', 'Dürüm Izgara Tavuklu'], ['Etli Krep', 'Krep Etli'],
+        ['Ispanaklı Lor Peynirli Krep', 'Krep Ispanaklı Lor Pynr'], ['Tavuklu Krep', 'Krep Tavuklu'],
+        ['Etli Quesadilla', 'Quesadilla Etli'], ['Tavuklu Quesadilla', 'Quesadilla Tavuklu'], ['Tavuk-Pilav', 'Tavuk Pilav'],
+      ] },
+      { n: 'Burgerler', c: ['burger'], u: [
+        ['Burger', 'Burger'], ['Cheeseburger', 'Cheeseburger'], ['Gurme Burger', 'Gurme Burger'],
+        ['Hot Chili Burger', 'Hot Chili Burger'], ['Islak Burger', 'Islak Burger'],
+        ['Mantarlı ve Kıtır Soğanlı Burger', 'Mantarlı ve Kıtır Soğanlı Burg.'], ['Tavuk Burger', 'Tavuk Burger'],
+        ['Texas Burger', 'Texas Burger'], ['Trio Burger', 'Trio Burger'], ['Trüf Soslu Mantarlı Burger', 'Trüf S.Mntrl.Burger'],
+        ['Vegan Burger', 'Vegan Burger'],
+      ] },
+    ] },
+    { n: 'Ana Yemekler', alt: [
+      { n: 'Tavuk', c: ['tavuk', 'uzakdogu'], u: [
+        ['Asya Usulü Tavuk', 'Asya Usulü Tavuk'], ['Bademli Fesleğenli Tavuk', 'Bademli Fesleğenli Tavuk'],
+        ['Cornflakes Şinitzel', 'Cornflakes Şinitzel'], ['Izgara Tavuk Şiş', 'Izgara Tavuk Şiş'],
+        ['Kekikli Tavuk Külbastı', 'Kekikli Tavuk Külbastı'], ['Kore Usulü Kızarmış Tavuk', 'Kore Usulü Kızarmış Tavuk'],
+        ['Köri Soslu Tavuk', 'Köri Soslu Tavuk'], ['Çıtır Tavuklu Noodle', 'Noodle Çıtır Tavuklu'],
+        ['Köri Tavuklu Noodle', 'Noodle Köri Tavuklu'], ['Sebzeli Noodle', 'Noodle Sebzeli'], ['Tavuk Kulesi', 'Tavuk Kulesi'],
+        ['Tavuk Şinitzel', 'Tavuk Şinitzel'], ['Teriyaki Soslu Tavuk', 'Tiryaki Soslu Tavuk'],
+      ] },
+      { n: 'Denizden', c: ['deniz'], u: [
+        ['Fish and Chips', 'Fish and Chips'], ['Somon Izgara', 'Somon Izgara'],
+      ] },
+      { n: 'Diyetteyim', c: ['diyet'], u: [
+        ['Buharda Tavukgöğsü', 'Buharda Tavuk Göğsü'],
+      ] },
+      { n: 'Et', c: ['et'], u: [
+        ['Bonfile Fileminyon', 'Bonfile Fileminyon'], ['Café De Paris Soslu Bonfile', "Cafe'de Paris Soslu Bonfile"],
+        ['Izgara Antrikot', 'Izgara Antrikot'], ['Izgara Köfte', 'Izgara Köfte'],
+        ['Kekikli Dana Külbastı', 'Kekikli Dana Külbastı'], ['Pepper Steak', 'Pepper Steak'],
+      ] },
+      { n: 'Çocuk Menü', c: ['cocuk'], u: [
+        ['Çocuk Abur Cubur', 'Çocuk Abur Cubur'], ['Çocuk Köfteli Spagetti', 'Çocuk Köfte Spagetti'],
+        ['Çocuk Mini Çıtır Tavuk', 'Çocuk Mini Ç.Tavuk'], ['Çocuk Pizza Karışık', 'Çocuk P.Karışık'],
+        ['Çocuk Pizza Margarita', 'Çocuk P.Margarita'], ['Çocuk Pizza Sosisli', 'Çocuk P.Sosisli'],
+        ['Çocuk Sade Makarna', 'Çocuk Sade Makarna'], ['Çocuk Sosis Keyfi', 'Çocuk Sosis Keyfi'],
+        ['Çocuk Şinitzel', 'Çocuk Şinitzel'], ['Çocuk Trio Burger', 'Çocuk Trio Burgers'],
+      ] },
+    ] },
+    { n: 'Sıcak-Soğuk İçecek', alt: [
+      { n: 'Soğuk İçecekler', c: ['mesrubat', 'su'], u: [
+        ['Ayran', 'Ayran'],
+        ['Cappy Meyve Suyu|Elma', 'Cappy Şişe Elma'], ['Cappy Meyve Suyu|Karışık', 'Cappy Şişe Karışık'],
+        ['Cappy Meyve Suyu|Portakal', 'Cappy Şişe Portakal'], ['Cappy Meyve Suyu|Şeftali', 'Cappy Şişe Şeftali'],
+        ['Cappy Meyve Suyu|Vişne', 'Cappy Şişe Vişne'],
+        ['Coca-Cola', 'Coca Cola'], ['Coca-Cola Light', 'Coca Cola Light'], ['Coca-Cola Şekersiz', 'Coca Cola Zero'],
+        ['Portakallı Havuç Suyu', 'Exotic Por. Havuç'], ['Portakallı Nar Suyu', 'Exotic Por. Nar'],
+        ['Nar Suyu', 'Exotic Nar Suyu'], ['Portakal Suyu', 'Exotic Portakal'], ['Fanta', 'Fanta'],
+        ['Fuse Tea|Limon', 'Fuse Tea Limon'], ['Fuse Tea|Şeftali', 'Fuse Tea Şeftali'],
+        ['Meyveli Limonata|Çilek', 'Limonata Çilek'], ['Meyveli Limonata|Elma', 'Limonata Elma'],
+        ['Meyveli Limonata|Nane', 'Limonata Nane'], ['Meyveli Limonata|Orman Meyveli', 'Limonata O.Meyveli'],
+        ['Limonata', 'Limonata Sade'], ['Red Bull', 'RedBull'],
+        ['Schweppes|Lime', 'Schweppes Lime'], ['Schweppes|Mandarin', 'Schweppes Mandrin'],
+        ['Schweppes|Tonik Şekersiz', 'Schweppes Tonik Şekersiz'], ['Schweppes|Tonik', 'Schweppes Tonik'],
+        ['Schweppes|Zencefil', 'Schweppes Zencefil'], ['Sprite', 'Sprite'], ['Su', 'Su'],
+        ['Meyveli Soda|Çilek', 'ŞİŞE Uludağ Çilek'], ['Meyveli Soda|Elma', 'ŞİŞE Uludağ Elma'],
+        ['Meyveli Soda|Karpuz Çilek', 'ŞİŞE Uludağ Karpuz Çilek'], ['Meyveli Soda|Limon', 'ŞİŞE Uludağ Limon'],
+        ['Meyveli Soda|Nar', 'ŞİŞE Uludağ Nar'],
+        ['Premium Soda|750 ml', 'Uludağ Premium 75 Ml'], ['Premium Soda', 'Uludağ Premium'],
+        ['Soda Limon', 'Uludağ Premium Soda Limon'], ['Soda Vişne', 'Uludağ Premium Vişne'],
+      ] },
+      { n: 'Alkolsüz Kokteyler', u: [
+        ['Alkolsüz Meyve Kokteyli', 'Alkolsüz Meyve Kokteyli'],
+      ] },
+      { n: 'Alkollü Kokteyller', c: ['sig1', 'sig2', 'intl', 'margarita', 'gintonic', 'sangria'], u: [] },
+      { n: 'Sıcak İçecekler', c: ['cay', 'kahve'], u: [
+        ['Türk Kahvesi', 'Türk Kahvesi'], ['Demleme Çay (Cam Bardak)', 'Demleme Çay'],
+        ['Demleme Çay (Kupa / Fincan)', 'Demleme Çay Kupa'], ['Coffee Latte', 'Cafe Latte'], ['Cappuccino', 'Cappuccino'],
+      ] },
+      { n: 'Kuruyemiş', c: ['cerez'], u: [
+        ['Fıstık', 'Tuzlu Fıstık'],
+      ] },
+    ] },
+    { n: 'Aperatif İçecekler', alt: [
+      { n: 'Biralar', c: ['biralar'], u: [
+        ["5'li Tadım Seti", "5'li Tadım Seti"],
+        ['1664 Blanc|Fıçı 25 cl', 'Blanc Fıçı 25 Cl'], ['1664 Blanc|Fıçı 33 cl', 'Blanc Fıçı 33 Cl'],
+        ['1664 Blanc|Fıçı 50 cl', 'Blanc Fıçı 50 Cl'], ['1664 Blanc|Şişe 33 cl', 'Blanc ŞİŞE 33 Cl'],
+        ['Budweiser', 'Budweiser ŞİŞE 33 Cl'], ['Carlsberg Luna', 'C.Luna ŞİŞE 50 Cl'],
+        ['Carlsberg Elephant', 'Carlsberg Elephant 50 Cl'],
+        ['Carlsberg|Şişe 33 cl', 'Carlsberg.33 Şişe'], ['Carlsberg|Şişe 50 cl', 'Carlsberg.50 Şişe'],
+        ['Carlsberg|Fıçı 25 cl', 'Carlsberg.Fıçı 25 Cl'], ['Carlsberg|Fıçı 33 cl', 'Carlsberg.Fıçı 33 Cl'],
+        ['Carlsberg|Fıçı 50 cl', 'Carlsberg.Fıçı 50 Cl'], ['Carlsberg|Fıçı 1 lt', 'Carlsberg.Fıçı 1 Lt'],
+        ['Desperados', 'Desperados ŞİŞE'], ['Frederik Brown Ale', 'Frederik Brown Ale ŞİŞE'],
+        ['Frederik India Pale Ale', 'Frederik India Pale ŞİŞE'], ['Frederik Local', 'Frederik Local ŞİŞE'],
+        ['Frederik Marzen Lager', 'Frederik Marzen Lager ŞİŞE'], ['Frederik NEIPA', 'Frederik NEIPA ŞİŞE'],
+        ['Frederik Tropic IPA', 'Frederik Tropic Ipa Şişe'], ['Frederik Wheat IPA', 'Frederik Wheat Ipa ŞİŞE'],
+        ['Frederik Yakima IPA', 'Frederik Yakima Ipa'], ['Daura (Glutensiz)', 'Glutensiz ŞİŞE 33 Cl'],
+        ['Guinness|Fıçı 25 cl', 'Guiness Fıçı 25 Cl'], ['Guinness|Fıçı 50 cl', 'Guiness Fıçı 50 Cl'],
+        ['Heineken', 'Heineken ŞİŞE 33 Cl'], ['Sol', 'Sol ŞİŞE'], ['Tuborg Filtresiz', 'Tuborg Filtresiz 50 Cl'],
+        ['Tuborg Ice', 'Tuborg ICE 33 Cl'], ['Tuborg Gold|Şişe 33 cl', 'Tuborg ŞİŞE 33 Cl'],
+        ['Tuborg Gold|Fıçı 25 cl', 'Tuborg Fıçı 25 Cl'], ['Tuborg Gold|Fıçı 33 cl', 'Tuborg Fıçı 33 Cl'],
+        ['Tuborg Gold|Fıçı 50 cl', 'Tuborg Fıçı 50 Cl'], ['Tuborg Gold|Fıçı 1 lt', 'Tuborg Fıçı 1 Lt'],
+        ['Tuborg Smooth', 'Tuborg Smooth 33 Cl'],
+        ['Weihenstephan Hefeweissbier|Fıçı 33 cl', 'Weihenstephan Fıçı 33 Cl'],
+        ['Weihenstephan Hefeweissbier|Fıçı 50 cl', 'Weihenstephan Fıçı 50 Cl'],
+        ['Weihenstephan Hefeweissbier|Şişe 33 cl', 'Weihenstephan ŞİŞE 33 Cl'],
+        ['Weihenstephan Vitus', 'Weihenstephan Vitus ŞİŞE'],
+      ] },
+      { n: 'Konyaklar', c: ['konyak'], u: [] },
+      { n: 'Likörler', c: ['likor'], u: [['aperatif>Garrone Lemoncello', null]] },
+      { n: 'Rakılar', u: [
+        ['aperatif>Yeni Rakı', null], ['aperatif>Yeni Seri', null], ['aperatif>Tekirdağ Altın Seri', null], ['aperatif>Efe Gold', null],
+      ] },
+      { n: 'Vermutlar', c: ['aperatif'], u: [] },
+    ] },
+    { n: 'Şarap-Şampanya', alt: [
+      { n: 'Beyaz Şaraplar', c: ['beyaz'], u: TO('beyaz', [
+        ['Ancyra Narince', 'Ancyra Narince'], ['Ancyra Sauvignon Blanc', 'Ancyra Sauv.Blanc'],
+        ['Ancyra Sultaniye Emir', 'Ancyra Sultaniye-Emir'], ['Angora Beyaz', 'Angora Beyaz 75'],
+        ["Cotes d'Avanos Chardonnay", "Cotes d'Avanos N.Chrdn"],
+        ['Çankaya|37,5 cl', 'Çankaya 37,5'], ['Çankaya|75 cl', 'Çankaya 75'], ['Egeo Sauvignon Blanc', 'Egeo Sau.Blanc'],
+        ['Kavaklıdere Misket', 'Kavaklıdere Misket'], ['Montes Sauvignon Blanc', 'Montes Sauvignon Blanc'],
+        ['Prestige Narince', 'Prestige Narince'], ['Santa Helena Chardonnay', 'Santa Helena Chardonnay'],
+        ['Santa Helena Sauvignon Blanc', 'Santa Helena Sau.Blanc'], ['Sartori Pinot Grigio', 'Sartori Pinot Grigio'],
+        ['Selection Narince-Emir', 'Selection Beyaz'], ['Vin-Art Narince-Chardonnay', 'Vin Art Narince Chardonnay'],
+      ]) },
+      { n: 'Kırmızı Şaraplar', c: ['kirmizi'], u: TO('kirmizi', [
+        ['Ancyra Boğazkere', 'Ancyra Boğazkere'], ['Ancyra Cabernet Sav. Syrah', 'Ancyra Cab.Sau.Syrah'],
+        ['Ancyra Kalecik Karası', 'Ancyra Kalecik Karası'], ['Ancyra Merlot', 'Ancyra Merlot'],
+        ['Ancyra Öküzgözü', 'Ancyra Öküzgözü'], ['Angora Kırmızı', 'Angora Kırmızı 75'],
+        ['Baron de Lastac', 'Baron de Lestac'], ['Bodega Calia Shiraz-Malbec', 'Bodega Calia Shiraz-Malbec'],
+        ['Claud-Bellevue Merlot-Cabernet Franc', 'Claud Bellevue'], ['Egeo Merlot Syrah Cabernet Sav.', 'Egeo Blend'],
+        ['Egeo Cabernet Sav.', 'Egeo Cabernet Sau.'], ['Egeo Syrah', 'Egeo Syrah'], ['Gato Negro Carmenere', 'Gato Negro'],
+        ['La Croix Lartique Merlot-Cabernet Franc', 'La Croix Lartigue'], ['La Folie Merlot-Cabernet Franc', 'La Folie'],
+        ['La Terra Chianti', 'La Terra Chianti'], ['Montes Malbec', 'Montes Malbec'], ['Montes Merlot', 'Montes Merlot'],
+      ]) },
+      { n: 'Roze Şaraplar', c: ['roze'], u: TO('roze', [
+        ['Ancyra Blush', 'Ancyra Blush'], ['Angora Roze', 'Angora Roze 75'], ['Blush by Moncigale', 'Blush By Moncigale'],
+        ['Casal Mendes', 'Casal Mendes'], ['Egeo Roze', 'Egeo Roze'], ['Lal', 'Lal 75'], ['Rosato', 'Rosato'],
+        ['Sartori Pinot Grigio Blush', 'Sartori Blush'],
+      ]) },
+      { n: 'Kadeh Şaraplar', c: ['kadeh'], u: TO('kadeh', [
+        ['Ancyra Blush', 'Kadeh Ancyra Blush'], ['Angora Beyaz', 'Kadeh Angora Beyaz'], ['Angora Kırmızı', 'Kadeh Angora Kırmızı'],
+        ['Angora Roze', 'Kadeh Angora Roze'], ['Ancyra Boğazkere', 'Kadeh Boğazkere'],
+        ['Ancyra Kalecik Karası', 'Kadeh Kalecik Karası'], ['Lal', 'Kadeh Lal'], ['Ancyra Merlot', 'Kadeh Merlot'],
+        ['Ancyra Narince', 'Kadeh Narince'], ['Ancyra Öküzgözü', 'Kadeh Öküzgözü'], ['Santa Helena S. Blanc', 'Kadeh Santa Helena'],
+      ]) },
+      { n: 'Şampanyalar', c: ['kopuklu'], u: TO('kopuklu', [
+        ['Altın Köpük', 'Altınköpük'], ['Cinzano Prosecco', 'Cinzano Prosecco'], ['Mumm Cordon Rouge', 'Gorgon Rouge'],
+        ['Henkel Trocken', 'Henkell Trocken'], ['İnci Damlası', 'İnci Damlası'], ['Martini Brüt', 'Martini Brüt'],
+        ['Moet Chandon', 'Moet Chandon'],
+      ]) },
+    ] },
+    { n: 'Malt Viskiler', alt: [] },
+    { n: 'Viskiler', c: ['viski'], alt: [] },
+    { n: 'Rom-Tequila', c: ['rom', 'tekila'], alt: [] },
+    { n: 'Cin-Vb.', c: ['cin', 'votka', 'shot', 'shotset', 'sise'], alt: [
+      { n: 'Ekler ve İlaveler', c: ['ekler', 'sos'], u: EKLER.concat([
+        ['Acılı Buffalo Sos', 'Z. Acılı Buffalo Sos'], ['Avokado Sos', 'Z. Avokado Sos'], ['Cheddar Sos', 'Z. Cheddar Sos'],
+        ['Çikolata Sos', 'Z. Çikolata'], ['Garlic Sos', 'Z. Garlik Sos'], ['Kokteyl Sos', 'Z. Kokteyl Sos'],
+        ['Salsa Sos', 'Z. Salsa Sos'], ['Sour Cream Sos', 'Z. Sour Cream Sos'], ['Sweet Chili Sos', 'Z. Sweet Chili Sos'],
+        ['Tartar Sos', 'Z. Tartar Sos'], ['Joker Sos (1 adet)', 'Z.. Sos 1 Joker'],
+      ]) },
+      { n: 'Promosyonlar İçki', c: ['promosise', 'promo51'], u: TO('promosise', PRO).concat(TO('promo51', P51), [
+        ['mesrubat>Red Bull Twist', 'Redbull Twist'], ['mesrubat>Stay Classic', 'Stay Classic'],
+      ]) },
+    ] },
+  ] };
 })();

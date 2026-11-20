@@ -1,7 +1,7 @@
 // Newcastle Sipariş: iPhone / web uygulamasının internetsiz çalışması.
 // Dosyalar önce telefondaki önbellekten açılır, arkada yenisi indirilir; yeni sürüm bir sonraki açılışta görünür.
 // (Android APK bunu kullanmaz; dosyaları zaten APK'nın içinden alır.)
-const CACHE = 'nc-v1';
+const CACHE = 'nc-v2';
 const FILES = ['./', 'index.html', 'app.js', 'menu.js', 'icerik.js', 'style.css', 'logo.jpg',
   'manifest.webmanifest', 'icon-192.png', 'icon-512.png', 'apple-touch-icon.png'];
 
